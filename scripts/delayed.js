@@ -25,7 +25,7 @@ async function loadAndConfigureAlloy() {
   await import('./alloy.min.js');
   try {
     await window.alloy('configure', {
-      datastreamId: 'e01294ec-f74a-43bb-93d6-2a2382c1ac34',
+      datastreamId: 'b5fc588d-65ad-4d49-82a5-df4c42cfc1ab',
       orgId: 'D15D15F354F647770A4C98A4@AdobeOrg',
       defaultConsent: 'in',
     });
