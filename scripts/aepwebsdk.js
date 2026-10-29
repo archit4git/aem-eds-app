@@ -5,6 +5,7 @@ export async function sendPageView(xData = {}) {
     personalization: {
       decisionScopes: ['offers-zone-1'],
       sendDisplayEvent: false,
+      defaultPersonalizationEnabled: false,
     },
     renderDecisions: true,
     xdm: {
