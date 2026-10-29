@@ -29,3 +29,21 @@ npm i
 ```sh
 npm run lint
 ```
+
+## AEP Web SDK
+
+The local Alloy bundle is loaded on demand by `scripts/aepwebsdk.js`. Set the
+datastream ID and Adobe organization ID before `scripts/scripts.js` runs:
+
+```html
+<script nonce="aem">
+  window.aepWebSdkConfig = {
+    datastreamId: 'YOUR_DATASTREAM_ID',
+    orgId: 'YOUR_ORG_ID',
+  };
+</script>
+```
+
+The SDK module exports `init()`, `sendEvent(event)`, and
+`trackPageView(pageName)`. Use `sendEvent` for other AEP XDM or data events;
+credentials and secrets must not be placed in client-side configuration.
