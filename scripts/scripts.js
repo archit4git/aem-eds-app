@@ -189,3 +189,12 @@ loadPage();
 window.addEventListener('alloyLoadedAndConfigured', () => {
   sendPageView();
 });
+
+function loadAdobeLaunch() {
+  const script = document.createElement('script');
+  script.src = 'https://assets.adobedtm.com/8f0cabe9be04/b8d3600f1398/launch-e85fed848374-development.min.js';
+  script.async = true;
+  document.head.appendChild(script);
+}
+
+loadAdobeLaunch();
