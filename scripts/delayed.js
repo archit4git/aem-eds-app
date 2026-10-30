@@ -25,8 +25,8 @@ async function loadAndConfigureAlloy() {
   await import('./alloy.min.js');
   try {
     await window.alloy('configure', {
-      datastreamId: 'b5fc588d-65ad-4d49-82a5-df4c42cfc1ab',
-      orgId: 'D15D15F354F647770A4C98A4@AdobeOrg',
+      datastreamId: 'b5fc588d-65ad-4d49-82a5-df4c42cfc1ab', // Lab-Play: b037696d-261c-4aff-a9a7-22333af5ba71, Prod-POC: b5fc588d-65ad-4d49-82a5-df4c42cfc1ab
+      orgId: 'D15D15F354F647770A4C98A4@AdobeOrg', // For Lab-Play: 936F50DB58F51CE40A495E0C@AdobeOrg, Prod-POC: D15D15F354F647770A4C98A4@AdobeOrg
       defaultConsent: 'in',
     });
     alloyLoadedAndConfigured = true;

@@ -4,8 +4,9 @@ export async function sendPageView(xData = {}) {
   await window.alloy('sendEvent', {
     personalization: {
       decisionScopes: ['offers-zone-1'],
-      sendDisplayEvent: false,
+      surfaces: ['web://main--aem-eds-app--archit4git.aem.page/offers'],
       defaultPersonalizationEnabled: false,
+      sendDisplayEvent: false,
     },
     renderDecisions: true,
     xdm: {
