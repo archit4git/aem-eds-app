@@ -1,7 +1,5 @@
-/* eslint-disable max-len */
 /* eslint-disable no-console */
 
-/*
 let alloyLoadedAndConfigured = false;
 
 (() => {
@@ -40,4 +38,3 @@ async function loadAndConfigureAlloy() {
 }
 
 await loadAndConfigureAlloy();
-*/
