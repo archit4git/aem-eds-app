@@ -3,7 +3,7 @@ export async function sendPageView(xData = {}) {
 
   await window.alloy('sendEvent', {
     personalization: {
-      surfaces: ['web://main--aem-eds-app--archit4git.aem.page/offers#offers-zone-1'],
+      surfaces: ['#offers-zone-1'],
       defaultPersonalizationEnabled: false,
       sendDisplayEvent: false,
     },
