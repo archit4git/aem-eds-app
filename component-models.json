@@ -220,9 +220,9 @@
     "fields": [
       {
         "component": "text",
-        "name": "text",
-        "value": "",
+        "name": "locationOnPage",
         "label": "Location on Page",
+        "description": "The location on the page where this offers zone should appear (as configured in AJO Channel Configuration)",
         "valueType": "string"
       }
     ]
