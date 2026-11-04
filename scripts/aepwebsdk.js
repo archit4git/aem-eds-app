@@ -3,7 +3,7 @@ export async function sendPageView(xData = {}) {
 
   await window.alloy('sendEvent', {
     personalization: {
-      surfaces: ['#offers-zone-1'],
+      surfaces: ['#offers-zone-1', '#offers-zone-2'],
       defaultPersonalizationEnabled: false,
       sendDisplayEvent: false,
     },
