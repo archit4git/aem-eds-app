@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
 import { createOptimizedPicture } from './aem.js';
 
+const aempublishurl = 'https://publish-p14733-e1160558.adobeaemcloud.com';
+
 /**
- * Processes the updated AEP WebSDK response object structures and 
+ * Processes the updated AEP WebSDK response object structures and
  * renders personalized AJO fragments into matching data-location-on-page elements.
  * @param {Object} response - The JSON payload object containing a 'propositions' array.
  */
 /**
- * Processes AEP WebSDK response object structures and renders 
+ * Processes AEP WebSDK response object structures and renders
  * personalized AJO fragments using EDS native image optimization.
  */
 export function renderPersonalizedOffers(response) {
@@ -46,7 +48,7 @@ export function renderPersonalizedOffers(response) {
           // 3. Leverage createOptimizedPicture natively from the current directory
           // Syntax: createOptimizedPicture(src, alt, eager, breakpoints)
           const optimizedPicture = createOptimizedPicture(
-            fragment.imageUrl, // The raw AEM /content/dam path from AJO
+            aempublishurl + fragment.imageUrl, // The raw AEM /content/dam path from AJO
             fragment.title, // Alt text
             false, // Set true only if this zone is above the fold (LCP)
             [{ width: '750' }], // Tailor custom viewport breakpoints if needed
