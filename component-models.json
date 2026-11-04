@@ -214,5 +214,17 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "offers-zone",
+    "fields": [
+      {
+        "component": "text",
+        "name": "text",
+        "value": "",
+        "label": "Location on Page",
+        "valueType": "string"
+      }
+    ]
   }
 ]
