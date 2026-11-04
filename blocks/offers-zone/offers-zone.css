@@ -1,39 +1,87 @@
-.offer-content {
-  border-radius: 12px;
-  margin-bottom: 40px;
+/* ==========================================================================
+   1. Dynamic Proposition Zones (Parent Container Layout)
+   ========================================================================== */
+div[data-location-on-page] {
+  display: grid;
+  /* Grid configuration: columns adapt smoothly down to mobile viewports */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 40px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- Alternating Zone Backgrounds --- */
+/* Target every odd proposition container zone */
+div[data-location-on-page]:nth-of-type(odd) {
+  background-color: #f9f9fb;
+}
+
+/* Target every even proposition container zone */
+div[data-location-on-page]:nth-of-type(even) {
+  background-color: #ffffff;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+}
+
+/* ==========================================================================
+   2. Personalized Offer Cards (The Square Blocks)
+   ========================================================================== */
+.ajo-offer-card {
   display: flex;
-  background-color: #F4E9DC;
   flex-direction: column;
-  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  
+  /* Enforce a strict 1:1 perfect square aspect ratio */
+  aspect-ratio: 1 / 1; 
+  width: 100%;
+  
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-@media (width >= 900px) {
-  .offer-content {
-    padding: 50px 191px 50px 334px;
-    background: #F4E9DC;
-    flex-direction: row;
-    gap: 120px;
-  }
+/* Subtle interactive hover effect */
+.ajo-offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.offer-left {
+/* --- Offer Typography --- */
+.ajo-offer-card h3 {
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222222;
+  margin: 0 0 12px 0;
+  text-align: center;
+  z-index: 2;
+}
+
+/* --- AEM EDS Optimized Picture Handling --- */
+.ajo-offer-card picture {
+  display: block;
+  width: 100%;
+  flex: 1; /* Instructs the structural picture tag to stretch and fill space */
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.offer-left h4,p {
-  margin: 10px;
-}
-
-.offer-right {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-@media (width >= 900px) {
-  .offer-left h4,p {
-    margin: 0;
-  }
+/* Handle the internal target responsive image node directly */
+.ajo-offer-card picture img {
+  width: 100%;
+  height: 100%;
+  /* Ensures the asset scales perfectly into a clean layout square without squishing */
+  object-fit: cover; 
+  object-position: center;
+  border-radius: 4px;
 }

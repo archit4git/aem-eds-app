@@ -1,52 +1,73 @@
-const offerZones = ['#offers-zone-1', '#offers-zone-2'];
+/* eslint-disable no-console */
+import { createOptimizedPicture } from './aem.js';
 
-function renderOfferZones(result) {
-  const propositions = result?.handle
-    ?.filter((entry) => entry.type === 'personalization:decisions')
-    .flatMap((entry) => entry.payload);
+/**
+ * Processes the updated AEP WebSDK response object structures and 
+ * renders personalized AJO fragments into matching data-location-on-page elements.
+ * @param {Object} response - The JSON payload object containing a 'propositions' array.
+ */
+/**
+ * Processes AEP WebSDK response object structures and renders 
+ * personalized AJO fragments using EDS native image optimization.
+ */
+export function renderPersonalizedOffers(response) {
+  if (!response || !Array.isArray(response.propositions)) return;
 
-  propositions?.forEach((proposition) => {
-    const scope = proposition.scope?.slice(proposition.scope.lastIndexOf('#'));
-    if (!offerZones.includes(scope)) return;
+  response.propositions.forEach((proposition) => {
+    const { scope } = proposition;
+    if (!scope || !scope.includes('#')) return;
 
-    const zone = document.querySelector(scope);
-    const offers = proposition.items?.[0]?.data?.content?.offers;
-    if (!zone || !Array.isArray(offers)) return;
+    const zoneId = scope.split('#')[1];
+    const targetElement = document.querySelector(`div[data-location-on-page="${zoneId}"]`);
 
-    const list = document.createElement('ul');
-    offers.forEach((offer) => {
-      const fragment = offer.ajoFragments?.[0];
-      const title = fragment?.title || offer.itemName;
-      if (typeof title !== 'string') return;
+    if (!targetElement) return;
+    if (!Array.isArray(proposition.items)) return;
 
-      const item = document.createElement('li');
-      const article = document.createElement('article');
-      const heading = document.createElement('h3');
-      heading.textContent = title;
-      article.append(heading);
+    proposition.items.forEach((item) => {
+      const offers = item.data?.content?.offers;
+      if (!Array.isArray(offers)) return;
 
-      if (typeof fragment?.imageUrl === 'string') {
-        const image = document.createElement('img');
-        image.src = fragment.imageUrl;
-        image.alt = title;
-        image.loading = 'lazy';
-        article.prepend(image);
-      }
+      // Clear standard/fallback layouts before custom rendering
+      targetElement.innerHTML = '';
 
-      item.append(article);
-      list.append(item);
+      offers.forEach((offer) => {
+        if (!Array.isArray(offer.ajoFragments)) return;
+
+        offer.ajoFragments.forEach((fragment) => {
+          // 2. Create the wrapper card using DOM methods
+          const card = document.createElement('div');
+          card.classList.add('ajo-offer-card');
+          card.id = fragment.id;
+
+          const title = document.createElement('h3');
+          title.textContent = fragment.title;
+          card.appendChild(title);
+
+          // 3. Leverage createOptimizedPicture natively from the current directory
+          // Syntax: createOptimizedPicture(src, alt, eager, breakpoints)
+          const optimizedPicture = createOptimizedPicture(
+            fragment.imageUrl, // The raw AEM /content/dam path from AJO
+            fragment.title, // Alt text
+            false, // Set true only if this zone is above the fold (LCP)
+            [{ width: '750' }], // Tailor custom viewport breakpoints if needed
+          );
+
+          card.appendChild(optimizedPicture);
+
+          // 4. Inject the final generated DOM node directly into the zone container
+          targetElement.appendChild(card);
+        });
+      });
     });
-
-    zone.replaceChildren(list);
   });
 }
 
-export async function sendPageView(xData = {}) {
+export async function sendPageView() {
   if (typeof window.alloy !== 'function') return;
 
   await window.alloy('sendEvent', {
     personalization: {
-      surfaces: offerZones,
+      surfaces: document.offersZones,
       defaultPersonalizationEnabled: false,
       sendDisplayEvent: false,
     },
@@ -59,10 +80,9 @@ export async function sendPageView(xData = {}) {
           URL: window.location.href,
         },
       },
-      ...xData,
     },
   }).then((result) => {
-    renderOfferZones(result);
+    renderPersonalizedOffers(result);
     // eslint-disable-next-line no-console
     console.log('AEP Web SDK page view sent', result);
     return result;
