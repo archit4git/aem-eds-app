@@ -71,7 +71,7 @@ export async function sendPageView() {
     personalization: {
       surfaces: document.offersZones,
       defaultPersonalizationEnabled: false,
-      sendDisplayEvent: false,
+      sendDisplayEvent: true,
     },
     renderDecisions: true,
     xdm: {
