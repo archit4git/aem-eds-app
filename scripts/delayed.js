@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 document.offersZones = [...document.querySelectorAll('div[data-location-on-page]')]
-  .map((div) => `web://main--aem-eds-app--archit4git.aem.live/offers#${div.getAttribute('data-location-on-page')}`);
+  .map((div) => `#${div.getAttribute('data-location-on-page')}`);
 
 let alloyLoadedAndConfigured = false;
 
